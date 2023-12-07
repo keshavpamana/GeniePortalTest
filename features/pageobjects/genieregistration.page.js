@@ -62,7 +62,21 @@ class GenieRegistration{
     datePick(date){
         return $(`//button[@type='button']//span[text()="${date}"]`);  
     }
-
+    get ProfessionDropdown(){
+        return $("#field_candidateProfession");
+    }
+    get defaultProfessionDropdown(){
+        return $("//select[@id='field_candidateProfession']/option[1]");
+    }
+    get SelectSpecialty(){
+        return $("(//button[contains(@class,'btn dropdown-toggle')])[1]");
+    }
+    SpecialtyulForm(text){
+        return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[1]/li//a[normalize-space()="${text}"]`);
+    }
+    get searchEngine(){
+        return $("(//input[@type='text'])[5]");
+    }
 
 
     async EmailField(table){

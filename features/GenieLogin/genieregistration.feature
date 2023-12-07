@@ -62,8 +62,33 @@ Feature: Testing the Genie Caregiver Registration form
     When user click on calendar icon
     When user click on "Today" button
     Then verify calendar field have today date
-    When user click on calendar icon
-    When user click on "Clear" button
-    When user click on "Close" button
-    When user click on calendar icon
+    When user click on calendar icon and click "Clear" button
+    When user click on close "Close" button
     Then user select a future date as "11"
+
+  @Profession @Specialty
+  Scenario: Verify the Profession and Specialty dropdowns
+    Given user is able to see a Profession dropdown selected default value is Select Profession
+    When user click on Profession dropdown
+    Then user able to see below options
+    When user select a "Allied Health Professional" option in Profession dropdown
+    Then user is able to see Select Specialty button dropdown and click on it
+    When user selects list of options
+      | Pharmacy           |
+      | Physical therapy   |
+      | MRI Technology     |
+      | Medical Technology |
+      | CT technology      |
+    When user select another option
+      | Dental hygiene |
+    Then user able to see a error message
+    When user remove one option from Specialty dropdown
+      | CT technology |
+    When user select a option2 "CNA" option in Profession dropdown
+    When user select Speacialty and select options
+      | CNA |
+      | TTT |
+    When user select a option3 "Physician" option in Profession dropdown
+    When user click on specialty and click on search engine and enter "pediatrics"
+    Then user select a given search option
+      | Pediatrics |

@@ -243,34 +243,112 @@ Then(/^verify calendar field have today date$/, async() => {
 	await browser.pause(2000);
 });
 
-When(/^user click on calendar icon$/, async() => {
+When('user click on calendar icon and click {string} button', async(button) => {
 	await genieregistrationPage.calendarIcon.click();
 	await browser.pause(2000)
-});
-
-When('user click on {string} button', async(button) => {
 	await genieregistrationPage.calendarButtons(button).click();
 	await browser.pause(2000);
 });
 
-When('user click on {string} button', async(button) => {
+When('user click on close {string} button', async(button) => {
+	await genieregistrationPage.calendarIcon.click();
+	await browser.pause(2000)
 	await genieregistrationPage.calendarButtons(button).click();
 	await browser.pause(2000);
 });
 
-When(/^user click on calendar icon$/, async() => {
+Then('user select a future date as {string}', async(date) => {
 	await genieregistrationPage.calendarIcon.click();
 	await browser.pause(2000)
-});
-
-Then('user select a future date as {string}', async() => {
 	await genieregistrationPage.datePick(date).click();
 	await genieregistrationPage.calendarField.saveScreenshot('./Screenshots/dateText2.png');
+	await browser.pause(3000);
+});
+
+// -------Profession and Specialty dropdowns------//
+
+Given(/^user is able to see a Profession dropdown selected default value is Select Profession$/, async() => {
+	let element=await genieregistrationPage.defaultProfessionDropdown;
+	console.log(element.isSelected());
+	let defaultValue=await genieregistrationPage.defaultProfessionDropdown.getAttribute('selected');
+	console.log(defaultValue);
+});
+
+When(/^user click on Profession dropdown$/, async() => {
+	await browser.scroll(0, 100);
+    await genieregistrationPage.ProfessionDropdown.click();
 	await browser.pause(2000);
 });
- 
 
+Then(/^user able to see below options$/, async() => {
+	await browser.saveScreenshot('./Screenshots/dropdownlist.png');
+});
 
+When('user select a {string} option in Profession dropdown', async(text) => {
+	await genieregistrationPage.ProfessionDropdown.selectByVisibleText(text);
+	await browser.pause(2000);
+});
 
+Then(/^user is able to see Select Specialty button dropdown and click on it$/, async() => {
+    await genieregistrationPage.SelectSpecialty.click();
+	await browser.pause(2000);
+});
 
+When(/^user selects list of options$/, async(text) => {
+    await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[1][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[2][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[3][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[4][0]).click();
+	await browser.pause(2000);
+});
 
+When(/^user select another option$/, async(text) => {
+    await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
+   
+});
+
+Then(/^user able to see a error message$/, async() => {
+     await browser.saveScreenshot('./Screenshots/errormsg.png');
+	 await browser.pause(2000);
+});
+
+When(/^user remove one option from Specialty dropdown$/, async(text) => {
+	await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
+    await browser.pause(2000);
+});
+
+When('user select a option2 {string} option in Profession dropdown', async(text) => {
+	await genieregistrationPage.ProfessionDropdown.selectByVisibleText(text);
+	await browser.pause(2000);
+});
+
+When(/^user select Speacialty and select options$/, async(text) => {
+	await genieregistrationPage.SelectSpecialty.click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.SpecialtyulForm(text.raw()[1][0]).click();
+	await browser.pause(2000);
+});
+
+When('user select a option3 {string} option in Profession dropdown', async(text) => {
+	await genieregistrationPage.ProfessionDropdown.selectByVisibleText(text);
+	await browser.pause(2000);
+});
+
+When('user click on specialty and click on search engine and enter {string}', async(value) => {
+	await genieregistrationPage.SelectSpecialty.click();
+	await browser.pause(2000);
+	await genieregistrationPage.searchEngine.setValue(value);
+	await browser.pause(2000);
+});
+
+Then(/^user select a given search option$/, async(text) => {
+	await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+});
