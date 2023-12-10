@@ -11,8 +11,11 @@ class GenieRegistration{
     get passwordfield(){
         return $('#password');
     }
-    get invalidEmailError(){
+    get invalidEmailError1(){
         return $("//p[normalize-space()='Your email is invalid.']");
+    }
+    get invalidEmailError2(){
+        return $("//p[normalize-space()='Please enter a valid email address of the format aaa@bbb.ccc']");
     }
     get existingEmailError(){
         return $("//div[@class='alert alert-danger']");
@@ -71,11 +74,50 @@ class GenieRegistration{
     get SelectSpecialty(){
         return $("(//button[contains(@class,'btn dropdown-toggle')])[1]");
     }
+    get SelectSpecialtyError(){
+        return $("(//div[contains(@class,'form-group')])[8]/div/p");
+    }
     SpecialtyulForm(text){
         return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[1]/li//a[normalize-space()="${text}"]`);
     }
     get searchEngine(){
         return $("(//input[@type='text'])[5]");
+    }
+    get StatesLicensedButton(){
+        return $("(//button[@type='button'])[8]");
+    }
+    get DestinationStatesdButton(){
+        return $("(//button[@type='button'])[9]");
+    }
+    get StatesLicensedsearchEngine(){
+        return $("(//input[@type='text'])[6]");
+    }
+    StatesLicensedulForm(text){
+        return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[2]/li//a[normalize-space()="${text}"]`);
+    }
+    DestinationStatesulForm(text){
+        return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[3]/li//a[normalize-space()="${text}"]`);
+    }
+    get DestinationStatessearchEngine(){
+        return $("(//input[@type='text'])[7]");
+    }
+    get recruiterProfileDropdown(){
+        return $("//select[@id='field_recruiterProfile']");
+    }
+    get NoteToRecruiterField(){
+        return $("#field_notes");
+    }
+    get ResumeInputField(){
+        return $("//input[@class='form-control']");
+    }
+    get uploadResumeButton(){
+        return $("//button[normalize-space()='Upload Resume']");
+    }
+    get RegisterButton(){
+        return $("//button[normalize-space()='Register']");
+    }
+    get HomeJobListingButton(){
+        return $("(//button[@type='button'])[11]");
     }
 
 

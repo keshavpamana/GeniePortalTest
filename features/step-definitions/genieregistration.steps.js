@@ -1,6 +1,9 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 const genieregistrationPage = require('../pageobjects/genieregistration.page');
 
+const path = require('path');
+const resumefilePath = path.join(__dirname, '"C:\Users\Chenna Pamalaboiyina\Downloads\Chennakeshava.Resume.doc"');
+
 //----------Email Field-----------//
 Given(/^user is on Genie Caregiver Registration form$/, async() => {
      await genieregistrationPage.genieurl();
@@ -28,9 +31,9 @@ When(/^user enter invalid email value$/, async(table) => {
 });
 
 Then('verify the email error message is {string}', async(errormessage) => {
-	let errormsgEle=genieregistrationPage.invalidEmailError;
+	let errormsgEle=genieregistrationPage.invalidEmailError2;
 	await expect(errormsgEle).toHaveTextContaining(errormessage);
-	console.log('Errormessage :'+errormsgEle.getText()); 
+	console.log('Errormessage :'+errormsgEle.getText());
 	await browser.pause(2000);
 });
 
@@ -196,17 +199,17 @@ Then('user is able to see a error message is {string}', async(error) => {
 
 When(/^user enter  multiple data into the firstname field$/, async(table) => {
      await genieregistrationPage.Firstname.clearValue();
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 	 await genieregistrationPage.Firstname.setValue(table.raw()[0][0]);
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 	 await genieregistrationPage.Firstname.clearValue();
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 	 await genieregistrationPage.Firstname.setValue(table.raw()[1][0]);
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 	 await genieregistrationPage.Firstname.clearValue();
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 	 await genieregistrationPage.Firstname.setValue(table.raw()[2][0]);
-	 await browser.pause(2000);
+	 await browser.pause(1000);
 });
 
 When(/^user  click on Lastname field$/, async() => {
@@ -216,15 +219,15 @@ When(/^user  click on Lastname field$/, async() => {
 
 When(/^user enter valid data into the Lastname field$/, async(table) => {
 	await genieregistrationPage.Lastname.setValue(table.raw()[0][0]);
-	await browser.pause(2000);
+	await browser.pause(1000);
 	await genieregistrationPage.Lastname.clearValue();
-	await browser.pause(2000);
+	await browser.pause(1000);
 	await genieregistrationPage.Lastname.setValue(table.raw()[1][0]);
-	await browser.pause(2000);
+	await browser.pause(1000);
 	await genieregistrationPage.Lastname.clearValue();
-	await browser.pause(2000);
+	await browser.pause(1000);
 	await genieregistrationPage.Lastname.setValue(table.raw()[2][0]);
-	await browser.pause(2000);
+	await browser.pause(1000);
 });
   //----------calendar field--------//
  
@@ -262,7 +265,7 @@ Then('user select a future date as {string}', async(date) => {
 	await browser.pause(2000)
 	await genieregistrationPage.datePick(date).click();
 	await genieregistrationPage.calendarField.saveScreenshot('./Screenshots/dateText2.png');
-	await browser.pause(3000);
+	await browser.pause(2000);
 });
 
 // -------Profession and Specialty dropdowns------//
@@ -312,8 +315,10 @@ When(/^user select another option$/, async(text) => {
    
 });
 
-Then(/^user able to see a error message$/, async() => {
-     await browser.saveScreenshot('./Screenshots/errormsg.png');
+Then('user able to see a error message as {string}', async(error) => {
+	 await browser.saveScreenshot('./Screenshots/errormsg.png');
+	 var specialtyerror=await genieregistrationPage.SelectSpecialtyError;
+	 await expect(specialtyerror).toHaveTextContaining(error);
 	 await browser.pause(2000);
 });
 
@@ -352,3 +357,117 @@ Then(/^user select a given search option$/, async(text) => {
 	await genieregistrationPage.SpecialtyulForm(text.raw()[0][0]).click();
 	await browser.pause(2000);
 });
+//--------recruiter dropdowns-----//
+
+Given(/^user select a States Licensed button dropdown$/, async() => {
+    await genieregistrationPage.StatesLicensedButton.click();
+	await browser.pause(1000);
+});
+
+When(/^user selects below Licensed States$/, async(text) => {
+	await genieregistrationPage.StatesLicensedulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.StatesLicensedulForm(text.raw()[1][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.StatesLicensedulForm(text.raw()[2][0]).click();
+	await browser.pause(2000);
+
+});
+
+Then(/^user remove last selected option$/, async(text) => {
+	await genieregistrationPage.StatesLicensedulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+});
+
+When('user select search engine and enter as {string}', async(value) => {
+	await genieregistrationPage.StatesLicensedsearchEngine.click();
+    await genieregistrationPage.StatesLicensedsearchEngine.setValue(value);
+	await browser.pause(2000);
+});
+Then(/^user selects particular option$/, async(text) => {
+	await genieregistrationPage.StatesLicensedulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.StatesLicensedButton.click();
+});
+
+Given(/^user select a Destination States button dropdown$/, async() => {
+    await genieregistrationPage.DestinationStatesdButton.click();
+	await browser.pause(1000);
+});
+
+When(/^user selects below Destination States$/,async(text) => {
+	await genieregistrationPage.DestinationStatesulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.DestinationStatesulForm(text.raw()[1][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.DestinationStatesulForm(text.raw()[2][0]).click();
+	await browser.pause(2000);
+
+});
+
+Then(/^user remove last selected Destination option$/, async(text) => {
+	await genieregistrationPage.DestinationStatesulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+});
+
+When('user select search engine and enter as {string} value', async(value) => {
+	await genieregistrationPage.DestinationStatessearchEngine.click();
+    await genieregistrationPage.DestinationStatessearchEngine.setValue(value);
+	await browser.pause(2000);
+});
+
+Then(/^user selects the given particular option$/, async(text) => {
+	await genieregistrationPage.DestinationStatesulForm(text.raw()[0][0]).click();
+	await browser.pause(2000);
+	await genieregistrationPage.DestinationStatesdButton.click();
+});
+
+Given(/^user select the Preferred Recruiter dropdown$/, async() => {
+   await genieregistrationPage.recruiterProfileDropdown.click();
+});
+
+Then(/^user not select any options from Preferred Recruiter dropdown$/, async() => {
+    await genieregistrationPage.NoteToRecruiterField.click();
+	await browser.pause(1000); 
+});
+
+Then(/^user able to see Preferred Recruiter field highlighted with red color$/, async() => {
+   let color= await genieregistrationPage.recruiterProfileDropdown.getCSSProperty('border-color');
+   console.log('border-color :'+color);
+   await genieregistrationPage.recruiterProfileDropdown.saveScreenshot('./Screenshots/redcolField.png');
+   await browser.pause(1000);
+});
+
+When(/^user select options from Preferred Recruiter dropdown$/, async() => {
+	await genieregistrationPage.recruiterProfileDropdown.selectByIndex(2);
+	await browser.pause(1000);
+	await genieregistrationPage.recruiterProfileDropdown.selectByIndex(4);
+	await browser.pause(1000);
+});
+
+Then(/^user able to see Preferred Recruiter field highlighted with green color$/, async() => {
+	let color= await genieregistrationPage.recruiterProfileDropdown.getCSSProperty('border-color');
+	console.log('border-color :'+color);
+	await genieregistrationPage.recruiterProfileDropdown.saveScreenshot('./Screenshots/greencolField.png');
+	await browser.pause(2000);
+});
+//--------------Handling the Resume Field---------//
+
+ When(/^user click on the Resume input field$/, async() => {
+    await genieregistrationPage.ResumeInputField.click();
+	await browser.pause(1000);
+});
+
+When(/^upload the resume format type as Microsoft Word Document$/, async() => {
+	const remoteFilePath=browser.uploadFile(resumefilePath);
+	await browser.pause(1000);
+	await genieregistrationPage.ResumeInputField.setValue(remoteFilePath);
+	await browser.pause(2000);
+});
+
+Then(/^click on the uploadResume button$/, async() => {
+    await genieregistrationPage.uploadResumeButton.click();
+	await browser.pause(5000);
+});
+
+
