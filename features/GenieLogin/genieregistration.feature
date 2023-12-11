@@ -1,10 +1,13 @@
 @GenieRegistationForm
-Feature: Testing the Genie Caregiver Registration form
+Feature: Genie Caregiver Registration form
 
   @emailInputField
   Scenario: Verify the Email input field
-    Given user is on Genie Caregiver Registration form
-    Then verify email label
+    Given user is in Genie webpage
+    When user is clicks on Login Register button
+    And user click on Register a new Account 
+    Then verify the  is in Genie Caregiver Registration form page
+    Then verify email label is displayed
     When user clicks on email input field
     When user enter invalid email value
       | abcdxyzy@ |
@@ -21,6 +24,8 @@ Feature: Testing the Genie Caregiver Registration form
   Scenario: Verify the Password input field
     When user enter empty password and click on Confirm Password
     Then verify the displayed error message like "Your password is required."
+    When user enter 50 above longer password into the password field
+    Then verify the displayed error message2 like "Your password cannot be longer than 50 characters."
     When user enter weak password
       | keshava |
     Then verify displayed password strengthBar
@@ -35,6 +40,9 @@ Feature: Testing the Genie Caregiver Registration form
 
   @phoneNumberInputField
   Scenario: Verify the Phone number input field
+    When user enter 20 digits above number into the phone number field
+    Then phone number field error message displayed as "This field cannot be longer than 20 characters."
+    Then Then phone number field error message2 displayed as "Acceptable Phone Number Format is XXX-XXX-XXXX where X is a Numeric Digit. The dashes at 4th and 8th positions are both optional."
     When user enter invalid phone number into the Phone Number field
       | 879908646 |
     Then user is able to see a message like "This PhoneNumber is Existed.Please Contact Admin."
@@ -105,6 +113,7 @@ Feature: Testing the Genie Caregiver Registration form
     When user select search engine and enter as "Rhode Island"
     Then user selects particular option
       | Rhode Island |
+    And user selects a Compact License check box
     Given user select a Destination States button dropdown
     When user selects below Destination States
       | Delaware   |
@@ -124,5 +133,5 @@ Feature: Testing the Genie Caregiver Registration form
   @uploadResume
   Scenario: Verify the Resume input field
     When user click on the Resume input field
+    When click on the Upload Resume button
     And upload the resume format type as Microsoft Word Document
-    Then click on the uploadResume button

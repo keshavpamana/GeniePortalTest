@@ -6,7 +6,7 @@ class GenieRegistration{
         return browser.url('http://geniehealthjobsqa-env-4.eba-kmcgagjd.us-west-1.elasticbeanstalk.com/#/register');
     }
     get emailLabel(){
-        return $("//input[@type='email']");
+        return $("//label[text()='Email']");
     }
     get passwordfield(){
         return $('#password');
@@ -20,8 +20,8 @@ class GenieRegistration{
     get existingEmailError(){
         return $("//div[@class='alert alert-danger']");
     }
-    get passwordError(){
-        return $("//p[normalize-space()='Your password is required.']");
+    passwordError(errorText){
+        return $(`//p[normalize-space()="${errorText}"]`);
     }
     get confirmPassError(){
         return $("//p[normalize-space()='Your confirmation password is required.']");
@@ -38,8 +38,8 @@ class GenieRegistration{
     get phoneNumberField(){
         return $("#field_phoneNumber");
     }
-    get phoneNumberFieldError(){
-        return $("//p[text()='This PhoneNumber is Existed.Please Contact Admin.']");
+    phoneNumberFieldError(errortext){
+        return $(`//p[normalize-space()="${errortext}"]`);
     }
     get Firstname(){
         return $("#field_firstName");
@@ -118,6 +118,12 @@ class GenieRegistration{
     }
     get HomeJobListingButton(){
         return $("(//button[@type='button'])[11]");
+    }
+    get RegisteraNewAccount(){
+        return $("//a[text()='Register a new account']");
+    }
+    get CompactLicenseCheckbox(){
+        return $("#field_compactLicense");
     }
 
 
