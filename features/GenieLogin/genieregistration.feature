@@ -5,10 +5,11 @@ Feature: Genie Caregiver Registration form
   Scenario: Verify the Email input field
     Given user is in Genie webpage
     When user is clicks on Login Register button
-    And user click on Register a new Account 
+    And user click on Register a new Account
     Then verify the  is in Genie Caregiver Registration form page
     Then verify email label is displayed
-    When user clicks on email input field
+    When user clicks on email input field and enter no data 
+    Then user able to see a email error message displayed as "This field is require"
     When user enter invalid email value
       | abcdxyzy@ |
     Then verify the email error message is "Please enter a valid email address of the format aaa@bbb.ccc"
@@ -16,6 +17,10 @@ Feature: Genie Caregiver Registration form
     When user enter already created mail into the email input field
       | cloudray@gmail.com |
     Then verify displayed error message "Email is already in use! Please choose another one"
+    When user enter minimum length email into email input field
+    Then user is able to see a email error message3 as "Your email is required to be at least 5 characters."
+    When user enter miximum length email into email input field
+    Then user is able to see a email error message4 as "Your email cannot be longer than 100 characters."
     When user enter valid email vlaue
       | abcdxyz@gmail.com |
     Then verify the email input field highlighted with green color
@@ -26,6 +31,8 @@ Feature: Genie Caregiver Registration form
     Then verify the displayed error message like "Your password is required."
     When user enter 50 above longer password into the password field
     Then verify the displayed error message2 like "Your password cannot be longer than 50 characters."
+    When user enter least character password into the password field
+    Then verify the displayed error message3 as "Your password is required to be at least 4 characters."
     When user enter weak password
       | keshava |
     Then verify displayed password strengthBar
@@ -45,7 +52,7 @@ Feature: Genie Caregiver Registration form
     Then Then phone number field error message2 displayed as "Acceptable Phone Number Format is XXX-XXX-XXXX where X is a Numeric Digit. The dashes at 4th and 8th positions are both optional."
     When user enter invalid phone number into the Phone Number field
       | 879908646 |
-    Then user is able to see a message like "This PhoneNumber is Existed.Please Contact Admin."
+    Then user is able to see a message like "Acceptable Phone Number Format is XXX-XXX-XXXX where X is a Numeric Digit. The dashes at 4th and 8th positions are both optional."
     When user enter valid phone number into the Phone number input field
       | 9492001460 |
 
@@ -53,6 +60,7 @@ Feature: Genie Caregiver Registration form
   Scenario: Verify the Firstname and Lastname fields
     When user click on firstname field and enter no data
     Then user is able to see a message "This field is required."
+    Then user also able to see lastname field error as "This field is required."
     When user enter above Hundred characters into the input field
     Then user is able to see a error message is "This field cannot be longer than 100 characters."
     When user enter  multiple data into the firstname field
@@ -60,6 +68,7 @@ Feature: Genie Caregiver Registration form
       |  123456 |
       | abcdxyz |
     When user  click on Lastname field
+    When user enter above Hundred characters into the lastname input field
     When user enter valid data into the Lastname field
       | !@#$%^  |
       |  123456 |
@@ -72,7 +81,7 @@ Feature: Genie Caregiver Registration form
     Then verify calendar field have today date
     When user click on calendar icon and click "Clear" button
     When user click on close "Close" button
-    Then user select a future date as "11"
+    Then user select a future date as "28"
 
   @Profession @Specialty
   Scenario: Verify the Profession and Specialty dropdowns

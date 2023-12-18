@@ -1,7 +1,8 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
 const genieregistrationPage = require('../pageobjects/genieregistration.page');
-const vars=require('../Variables/genievariables.json');
+const vars=require('../Properties/genievariables.json');
 const { LoginOrRegister } = require('../pageobjects/genieregister.page');
+const { elementClick } = require('../Properties/TimeOut.page');
 
 //----------Email Field-----------//
 Given(/^user is in Genie webpage$/, async() => {
@@ -16,7 +17,7 @@ When(/^user is clicks on Login Register button$/, async() => {
 });
 
 When(/^user click on Register a new Account$/, async() => {
-    await genieregistrationPage.RegisteraNewAccount.click();
+    await elementClick(genieregistrationPage.RegisteraNewAccount);
 });
 
 Then(/^verify the  is in Genie Caregiver Registration form page$/, async() => {
@@ -40,8 +41,16 @@ Then(/^verify email label$/, async() => {
 	await browser.pause(1000);
 });
 
-When(/^user clicks on email input field$/, async() => {
+When(/^user clicks on email input field and enter no data$/, async() => {
     await genieregistrationPage.emailfield.click();
+	await browser.pause(1000);
+	await genieregistrationPage.passwordfield.click();
+});
+
+Then('user able to see a email error message displayed as {string}', async(emailerror) => {
+	var errormsgEle=genieregistrationPage.thisfieldError;
+	await expect(errormsgEle).toHaveTextContaining(emailerror);
+	console.log('Errormessage :'+errormsgEle.getText());
 	await browser.pause(1000);
 });
 
@@ -52,9 +61,9 @@ When(/^user enter invalid email value$/, async(table) => {
 	await genieregistrationPage.passwordfield.click();
 });
 
-Then('verify the email error message is {string}', async(errormessage) => {
-	let errormsgEle=genieregistrationPage.invalidEmailError2;
-	await expect(errormsgEle).toHaveTextContaining(errormessage);
+Then('verify the email error message is {string}', async(emailerror) => {
+	var errormsgEle=genieregistrationPage.invalidEmailError(emailerror)
+	await expect(errormsgEle).toHaveTextContaining(emailerror);
 	console.log('Errormessage :'+errormsgEle.getText());
 	await browser.pause(1000);
 });
@@ -75,10 +84,44 @@ When(/^user enter already created mail into the email input field$/, async(table
 });
 
 Then('verify displayed error message {string}', async(errormessage2) => {
-    let errormsgEle2=await genieregistrationPage.existingEmailError;
+    var errormsgEle2=await genieregistrationPage.existingEmailError;
 	await expect(errormsgEle2).toHaveTextContaining(errormessage2);
 	await browser.pause(1000);
 });
+
+When(/^user enter minimum length email into email input field$/, async() => {
+    await genieregistrationPage.emailfield.setValue(vars.minlegthgmail);
+	await genieregistrationPage.passwordfield.click();
+});
+
+Then('user is able to see a email error message3 as {string}', async(emailerror) => {
+	var errormsgEle=genieregistrationPage.invalidEmailError(emailerror)
+	await expect(errormsgEle).toHaveTextContaining(emailerror);
+	console.log('Errormessage :'+errormsgEle.getText());
+	await browser.saveScreenshot('./Screenshots/emailerror.png');
+	await browser.pause(1000);
+});
+
+When(/^user enter miximum length email into email input field$/, async() => {
+	const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+	function generateString(length) {
+		let result = ' '+'@gmail.com';
+		const charactersLength = characters.length;
+		for ( let i = 0; i < length; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	}
+		await genieregistrationPage.emailfield.setValue(generateString(100));
+});
+
+Then('user is able to see a email error message4 as {string}', async(emailerror) => {
+	var errormsgEle=genieregistrationPage.invalidEmailError(emailerror)
+	await expect(errormsgEle).toHaveTextContaining(emailerror);
+	console.log('Errormessage :'+errormsgEle.getText());
+	await browser.pause(1000);
+});
+
 
 When(/^user enter valid email vlaue$/, async(table) => {
     await genieregistrationPage.emailfield.clearValue();
@@ -130,6 +173,17 @@ Then('verify the displayed error message2 like {string}', async(passerror) => {
 	await browser.pause(1000);
 });
 
+When(/^user enter least character password into the password field$/, async() => {
+    await genieregistrationPage.passwordfield.click();
+	await genieregistrationPage.passwordfield.setValue(vars.leastpassword);
+});
+
+Then('verify the displayed error message3 as {string}', async(passerror) => {
+	let passerrtext=await genieregistrationPage.passwordError(passerror);
+    await await expect(passerrtext).toHaveTextContaining(passerror);
+	console.log(passerrtext.getText());
+	await browser.pause(1000);
+});
 
 // Then('verify the displayed  confirmation error message like {string}', async(confirmpasserror) => {
 // 	let confirmPasserrtext=await genieregistrationPage.confirmPassError;
@@ -229,10 +283,16 @@ When(/^user click on firstname field and enter no data$/, async() => {
 	await genieregistrationPage.Lastname.click();
 });
 
-Then('user is able to see a message {string}', async(error) => {
-	let error1=await genieregistrationPage.FirstNLastNError1;
-	await expect(error1).toHaveTextContaining(error);
-	await browser.pause(2000);
+Then('user is able to see a message {string}', async(firstnameerror) => {
+	let error1=await genieregistrationPage.FirstnameError(firstnameerror)
+	await expect(error1).toHaveTextContaining(firstnameerror);
+});
+
+Then('user also able to see lastname field error as {string}', async(lastnameerror) => {
+	await genieregistrationPage.Firstname.click();
+	let error1=await genieregistrationPage.LastnameError(lastnameerror);
+	await expect(error1).toHaveTextContaining(lastnameerror);
+	await browser.pause(1000);
 });
 
 When('user enter above Hundred characters into the input field', async() => {
@@ -248,9 +308,9 @@ function generateString(length) {
     await genieregistrationPage.Firstname.setValue(generateString(105));
 });
 
-Then('user is able to see a error message is {string}', async(error) => {
-	let error1=await genieregistrationPage.FirstNLastNError2;
-	await expect(error1).toHaveTextContaining(error);
+Then('user is able to see a error message is {string}', async(firstnameerror) => {
+	let error1=await genieregistrationPage.FirstnameError(firstnameerror);
+	await expect(error1).toHaveTextContaining(firstnameerror);
 	await browser.pause(2000);
 });
 
@@ -274,7 +334,32 @@ When(/^user  click on Lastname field$/, async() => {
 	 await browser.pause(1000);
 });
 
+When(/^user enter above Hundred characters into the lastname input field$/, async() => {
+	const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	function generateString(length) {
+		let result = ' ';
+		const charactersLength = characters.length;
+		for ( let i = 0; i < length; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() * charactersLength));
+		}
+		return result;
+	}
+		await genieregistrationPage.Lastname.setValue(generateString(105));
+		await browser.pause(2000);
+});
+
+// Then('user is able to see a lastname error message is {string}', async(lastnameerror) => {
+// 	let error1=await genieregistrationPage.LastnameError(lastnameerror);
+// 	await expect(error1).toHaveTextContaining(lastnameerror);
+// 	// var error1=await genieregistrationPage.LastnameError(lastnameerror).getText();
+// 	// if(error1==lastnameerror){
+//     //   console.log(error1);
+// 	// }
+// 	await browser.pause(1000);
+// });
+
 When(/^user enter valid data into the Lastname field$/, async(table) => {
+	// await genieregistrationPage.Lastname.clearValue();
 	await genieregistrationPage.Lastname.setValue(table.raw()[0][0]);
 	await browser.pause(1000);
 	await genieregistrationPage.Lastname.clearValue();
@@ -323,6 +408,7 @@ Then('user select a future date as {string}', async(date) => {
 	await genieregistrationPage.datePick(date).click();
 	await genieregistrationPage.calendarField.saveScreenshot('./Screenshots/dateText2.png');
 	await browser.pause(2000);
+
 });
 
 // -------Profession and Specialty dropdowns------//
@@ -519,7 +605,7 @@ Then(/^user able to see Preferred Recruiter field highlighted with green color$/
 });
 
 When(/^upload the resume format type as Microsoft Word Document$/, async() => {
-	const resumefilePath = './Files/Chennakeshava_Resume.doc'
+	const resumefilePath = './Files/Chennakeshava.Resume.doc'
 	console.log(resumefilePath);
 	const remoteFilePath=await browser.uploadFile(resumefilePath);
 	await browser.pause(3000);

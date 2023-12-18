@@ -14,8 +14,11 @@ class GenieRegistration{
     get invalidEmailError1(){
         return $("//p[normalize-space()='Your email is invalid.']");
     }
-    get invalidEmailError2(){
-        return $("//p[normalize-space()='Please enter a valid email address of the format aaa@bbb.ccc']");
+    invalidEmailError(emailerror){
+        return $(`//p[normalize-space()="${emailerror}"]`);
+    }
+    get thisfieldError(){
+        return $("(//p[@class='help-block'])[1]");
     }
     get existingEmailError(){
         return $("//div[@class='alert alert-danger']");
@@ -47,11 +50,11 @@ class GenieRegistration{
     get Lastname(){
         return $("#field_lastName");
     }
-    get FirstNLastNError2(){
-        return $("//p[normalize-space()='This field cannot be longer than 100 characters.']");
+     LastnameError(lastnameerror){
+        return $(`(//div[contains(@class,'form-group required has-error')])[2]//p[normalize-space()="${lastnameerror}"]`);
     }
-    get FirstNLastNError1(){
-        return $("(//p[normalize-space()='This field is required.'])[2]");
+     FirstnameError(firstnameerror){
+        return $(`(//div[contains(@class,'form-group required has-error')])[1]//p[normalize-space()="${firstnameerror}"]`);
     }
     get calendarField(){
         return $("#field_availableToStart");
@@ -63,7 +66,7 @@ class GenieRegistration{
         return $(`//button[text()="${button}"]`);
     }
     datePick(date){
-        return $(`//button[@type='button']//span[text()="${date}"]`);  
+        return $(`//table[@class='uib-daypicker']/tbody//button[not(contains(@disabled,'disabled'))]//span[text()="${date}"]`);  
     }
     get ProfessionDropdown(){
         return $("#field_candidateProfession");
