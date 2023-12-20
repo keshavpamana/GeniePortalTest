@@ -7,6 +7,7 @@ Feature: Login Functionalities
     Then user clicks on LoginOrRegister
     When user enter Username as "genieadmin"
     When user enter Password as "Dallas!@#$"
-    Then user click on SignIn button
+    When user click on SignIn button
+    
 
     

@@ -23,6 +23,7 @@ class GenieRegistration{
     get existingEmailError(){
         return $("//div[@class='alert alert-danger']");
     }
+    //p[contains(@ng-show,'form.password.')]
     passwordError(errorText){
         return $(`//p[normalize-space()="${errorText}"]`);
     }
@@ -51,10 +52,10 @@ class GenieRegistration{
         return $("#field_lastName");
     }
      LastnameError(lastnameerror){
-        return $(`(//div[contains(@class,'form-group required has-error')])[2]//p[normalize-space()="${lastnameerror}"]`);
+        return $(`(//div[contains(@class,'form-group required has-error')])[3]//p[normalize-space()="${lastnameerror}"]`);
     }
      FirstnameError(firstnameerror){
-        return $(`(//div[contains(@class,'form-group required has-error')])[1]//p[normalize-space()="${firstnameerror}"]`);
+        return $(`(//div[contains(@class,'form-group required has-error')])[2]//p[normalize-space()="${firstnameerror}"]`);
     }
     get calendarField(){
         return $("#field_availableToStart");

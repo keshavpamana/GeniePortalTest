@@ -19,7 +19,7 @@ Feature: Genie Caregiver Registration form
     Then verify displayed error message "Email is already in use! Please choose another one"
     When user enter minimum length email into email input field
     Then user is able to see a email error message3 as "Your email is required to be at least 5 characters."
-    When user enter miximum length email into email input field
+    When user enter maximum length email into email input field
     Then user is able to see a email error message4 as "Your email cannot be longer than 100 characters."
     When user enter valid email vlaue
       | abcdxyz@gmail.com |
