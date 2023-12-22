@@ -9,7 +9,7 @@ Feature: Genie Caregiver Registration form
     Then verify the  is in Genie Caregiver Registration form page
     Then verify email label is displayed
     When user clicks on email input field and enter no data 
-    Then user able to see a email error message displayed as "This field is require"
+    Then user able to see a email error message displayed as "This field is required"
     When user enter invalid email value
       | abcdxyzy@ |
     Then verify the email error message is "Please enter a valid email address of the format aaa@bbb.ccc"
@@ -39,9 +39,14 @@ Feature: Genie Caregiver Registration form
     When user enter strong password
       | keshav_123 |
     Then user verify displayed password strengthBar
+    When user enter maximum characters into the Confirm Password field
+    Then verify the confirm password field error as "Your confirmation password cannot be longer than 50 characters."
+    When user enter minimum characters into the Confirm Password field
+    Then verify the confirm password field error as "Your confirmation password is required to be at least 4 characters."
     When user enter wrong confirm password into the Confirm Password field
       | 123456 |
     Then verify displayed error message is "The password and its confirmation do not match!"
+    
     When user enter correct matched password into the Confirm Password field
       | keshav_123 |
 

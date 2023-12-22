@@ -3,6 +3,7 @@ const genieregistrationPage = require('../pageobjects/genieregistration.page');
 const vars=require('../Properties/genievariables.json');
 const { LoginOrRegister } = require('../pageobjects/genieregister.page');
 const { elementClick, waitTime } = require('../Properties/TimeOut.page');
+const cucumberJson = require("wdio-cucumberjs-json-reporter");
 
 //----------Email Field-----------//
 Given(/^user is in Genie webpage$/, async() => {
@@ -29,7 +30,7 @@ Then(/^verify email label is displayed$/, async() => {
 	var lableDisplayed=await genieregistrationPage.emailLabel.isDisplayed();
 	console.log(lableDisplayed);
 	console.log(await genieregistrationPage.emailLabel.getText());
-	await genieregistrationPage.emailLabel.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 Then(/^verify email label$/, async() => {
@@ -45,7 +46,7 @@ When(/^user clicks on email input field and enter no data$/, async() => {
 Then('user able to see a email error message displayed as {string}', async(emailerror) => {
 	var errormsgEle=genieregistrationPage.thisfieldError;
 	await expect(errormsgEle).toHaveTextContaining(emailerror);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter invalid email value$/, async(table) => {
@@ -57,13 +58,13 @@ When(/^user enter invalid email value$/, async(table) => {
 Then('verify the email error message is {string}', async(emailerror) => {
 	var errormsgEle=genieregistrationPage.invalidEmailError(emailerror)
 	await expect(errormsgEle).toHaveTextContaining(emailerror);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 Then(/^verify the email input field highlighted with red color$/, async() => {
     let emailfieldcolor=await genieregistrationPage.emailfield.getCSSProperty('border-color');
 	console.log(emailfieldcolor);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter already created mail into the email input field$/, async(table) => {
@@ -76,7 +77,7 @@ When(/^user enter already created mail into the email input field$/, async(table
 Then('verify displayed error message {string}', async(errormessage2) => {
     var errormsgEle2=await genieregistrationPage.existingEmailError;
 	await expect(errormsgEle2).toHaveTextContaining(errormessage2);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter minimum length email into email input field$/, async() => {
@@ -88,7 +89,7 @@ Then('user is able to see a email error message3 as {string}', async(emailerror)
 	var errormsgEle=genieregistrationPage.invalidEmailError(emailerror)
 	await expect(errormsgEle).toHaveTextContaining(emailerror);
 	console.log('Errormessage :'+errormsgEle.getText());
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter maximum length email into email input field$/, async() => {
@@ -109,7 +110,7 @@ Then('user is able to see a email error message4 as {string}', async(emailerror)
 	await errormsgEle.waitUntil();
 	await expect(errormsgEle).toHaveTextContaining(emailerror);
 	console.log('Errormessage :'+errormsgEle.getText());
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter valid email vlaue$/, async(table) => {
@@ -120,7 +121,7 @@ When(/^user enter valid email vlaue$/, async(table) => {
 Then(/^verify the email input field highlighted with green color$/, async() => {
 	let emailfieldcolor=await genieregistrationPage.emailfield.getCSSProperty('border-color');
 	console.log(emailfieldcolor);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 //----------Password Field-----------//
@@ -134,7 +135,7 @@ Then('verify the displayed error message like {string}', async(passerror) => {
 	let passerrtext=await genieregistrationPage.passwordError(passerror);
     await expect(passerrtext).toHaveTextContaining(passerror);
 	console.log(passerrtext.getText());
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter 50 above longer password into the password field$/, async() => {
@@ -156,7 +157,7 @@ Then('verify the displayed error message2 like {string}', async(passerror) => {
 	let passerrtext=await genieregistrationPage.passwordError(passerror);
     await expect(passerrtext).toHaveTextContaining(passerror);
 	console.log(passerrtext.getText());
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter least character password into the password field$/, async() => {
@@ -169,7 +170,7 @@ Then('verify the displayed error message3 as {string}', async(passerror) => {
 	let passerrtext=await genieregistrationPage.passwordError(passerror);
     await expect(passerrtext).toHaveTextContaining(passerror);
 	console.log(passerrtext.getText());
-	await browser.takeScreenshot(); 
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png'); 
 });
 
 // Then('verify the displayed  confirmation error message like {string}', async(confirmpasserror) => {
@@ -185,7 +186,7 @@ When(/^user enter weak password$/, async(table) => {
 
 Then(/^verify displayed password strengthBar$/, async() => {
 	await waitTime();
-    await genieregistrationPage.strengthBar.takeScreenshot();
+    cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter strong password$/, async(table) => {
@@ -195,8 +196,47 @@ When(/^user enter strong password$/, async(table) => {
 
 Then(/^user verify displayed password strengthBar$/, async() => {
 	await waitTime();
-	await genieregistrationPage.strengthBar.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
+
+When(/^user enter maximum characters into the Confirm Password field$/, async() => {
+	await elementClick(genieregistrationPage.confirmPasswordField);
+	const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function generateString(length) {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+	await genieregistrationPage.confirmPasswordField.setValue(generateString(55));
+	await waitTime();
+});
+
+Then('verify the confirm password field error as {string}', async(errortext) => {
+	let passerrtext=await genieregistrationPage.passwordError(errortext);
+    await expect(passerrtext).toHaveTextContaining(errortext);
+	console.log(passerrtext.getText());
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
+});
+
+When(/^user enter minimum characters into the Confirm Password field$/, async() => {
+	await elementClick(genieregistrationPage.confirmPasswordField);
+	const characters ='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+function generateString(length) {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+}
+	await genieregistrationPage.confirmPasswordField.setValue(generateString(2));
+	await waitTime();
+});
+
+
 
 When(/^user enter wrong confirm password into the Confirm Password field$/, async(table) => {
     await genieregistrationPage.confirmPasswordField.setValue(table.raw()[0][0]);
@@ -207,7 +247,7 @@ Then('verify displayed error message is {string}', async(confirmpassError) => {
 	let confirmPasserrtext2=await genieregistrationPage.confirmPasswordError;
 	await expect(confirmPasserrtext2).toHaveTextContaining(confirmpassError);
 	console.log(confirmPasserrtext2.getText());
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter correct matched password into the Confirm Password field$/, async(table) => {
@@ -235,13 +275,13 @@ Then('phone number field error message displayed as {string}', async(errortext) 
 	await elementClick(genieregistrationPage.Firstname);
 	let error1=await genieregistrationPage.phoneNumberFieldError(errortext)
 	await expect(error1).toHaveTextContaining(errortext);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 Then('Then phone number field error message2 displayed as {string}', async(errortext) => {
 	let error1=await genieregistrationPage.phoneNumberFieldError(errortext)
 	await expect(error1).toHaveTextContaining(errortext);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter invalid phone number into the Phone Number field$/, async(table) => {
@@ -252,7 +292,7 @@ When(/^user enter invalid phone number into the Phone Number field$/, async(tabl
 Then('user is able to see a message like {string}', async(errortext) => {
 	let error1=await genieregistrationPage.phoneNumberFieldError(errortext)
 	await expect(error1).toHaveTextContaining(errortext);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter valid phone number into the Phone number input field$/, async(table) => {
@@ -271,14 +311,14 @@ When(/^user click on firstname field and enter no data$/, async() => {
 Then('user is able to see a message {string}', async(firstnameerror) => {
 	let error1=await genieregistrationPage.FirstnameError(firstnameerror)
 	await expect(error1).toHaveTextContaining(firstnameerror);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 Then('user also able to see lastname field error as {string}', async(lastnameerror) => {
 	await genieregistrationPage.Firstname.click();
 	let error1=await genieregistrationPage.LastnameError(lastnameerror);
 	await expect(error1).toHaveTextContaining(lastnameerror);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When('user enter above Hundred characters into the input field', async() => {
@@ -297,12 +337,12 @@ function generateString(length) {
 Then('user is able to see a error message is {string}', async(firstnameerror) => {
 	let error1=await genieregistrationPage.FirstnameError(firstnameerror);
 	await expect(error1).toHaveTextContaining(firstnameerror);
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When(/^user enter  multiple data into the firstname field$/, async(table) => {
      await genieregistrationPage.Firstname.clearValue();
-	 await genieregistrationPage.Firstname.waitForclickable().setValue(table.raw()[0][0]);
+	 await genieregistrationPage.Firstname.setValue(table.raw()[0][0]);
 	 await genieregistrationPage.Firstname.clearValue();
 	 await genieregistrationPage.Firstname.setValue(table.raw()[1][0]);
 	 await genieregistrationPage.Firstname.clearValue();
@@ -324,7 +364,7 @@ When(/^user enter above Hundred characters into the lastname input field$/, asyn
 		return result;
 	}
 		await genieregistrationPage.Lastname.setValue(generateString(105));
-		await browser.takeScreenshot();
+		cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 		await waitTime();
 });
 
@@ -354,32 +394,34 @@ When(/^user click on calendar icon$/, async() => {
 });
 
 When('user click on {string} button', async(button) => {
-	await elementClick(genieregistrationPage.calendarButtons(button));
+	await genieregistrationPage.calendarButtons(button).click();
 	await waitTime();
 });
 
 Then(/^verify calendar field have today date$/, async() => {
-    await genieregistrationPage.calendarField.takeScreenshot();
+    cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 	await waitTime();
 });
 
 When('user click on calendar icon and click {string} button', async(button) => {
-	await elementClick(genieregistrationPage.calendarIcon);
+	await genieregistrationPage.calendarIcon.click();
 	await waitTime();
-	await elementClick(genieregistrationPage.calendarButtons(button));
+	await genieregistrationPage.calendarButtons(button).click();
+	await waitTime();
 });
 
 When('user click on close {string} button', async(button) => {
 	await elementClick(genieregistrationPage.calendarIcon);
 	await waitTime();
 	await elementClick(genieregistrationPage.calendarButtons(button));
+	await waitTime();
 });
 
 Then('user select a future date as {string}', async(date) => {
 	await elementClick(genieregistrationPage.calendarIcon);
 	await waitTime();
 	await elementClick(genieregistrationPage.datePick(date));
-	await genieregistrationPage.calendarField.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 	await waitTime();
 });
 
@@ -394,15 +436,17 @@ Given(/^user is able to see a Profession dropdown selected default value is Sele
 
 When(/^user click on Profession dropdown$/, async() => {
 	await browser.scroll(0, 100);
+	await waitTime();
     await elementClick(genieregistrationPage.ProfessionDropdown);
 	await waitTime();
 });
 
 Then(/^user able to see below options$/, async() => {
-	await browser.takeScreenshot();
+	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 });
 
 When('user select a {string} option in Profession dropdown', async(text) => {
+	await waitTime();
 	await genieregistrationPage.ProfessionDropdown.selectByVisibleText(text);
 	await waitTime();
 });
@@ -433,7 +477,7 @@ Then('user able to see a error message as {string}', async(error) => {
 	 await browser.saveScreenshot('./Screenshots/errormsg.png');
 	 var specialtyerror=await genieregistrationPage.SelectSpecialtyError;
 	 await expect(specialtyerror).toHaveTextContaining(error);
-     await browser.takeScreenshot();
+     cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 	});
 
 When(/^user remove one option from Specialty dropdown$/, async(text) => {
@@ -461,18 +505,21 @@ When('user select a option3 {string} option in Profession dropdown', async(text)
 
 When('user click on specialty and click on search engine and enter {string}', async(value) => {
 	await elementClick(genieregistrationPage.SelectSpecialty);
+	await waitTime();
 	await genieregistrationPage.searchEngine.setValue(value);
 	await waitTime();
 });
 
 Then(/^user select a given search option$/, async(text) => {
 	await elementClick(genieregistrationPage.SpecialtyulForm(text.raw()[0][0]));
+	await waitTime();
 });
 
 //--------recruiter dropdowns-----//
 
 Given(/^user select a States Licensed button dropdown$/, async() => {
     await elementClick(genieregistrationPage.StatesLicensedButton);
+	await waitTime();
 });
 
 When(/^user selects below Licensed States$/, async(text) => {
@@ -494,7 +541,9 @@ When('user select search engine and enter as {string}', async(value) => {
 });
 Then(/^user selects particular option$/, async(text) => {
 	await elementClick(genieregistrationPage.StatesLicensedulForm(text.raw()[0][0]));
+	await waitTime();
 	await elementClick(genieregistrationPage.StatesLicensedButton);
+	await waitTime();
 });
 
 When(/^user selects a Compact License check box$/, async() => {
@@ -544,7 +593,7 @@ Then(/^user able to see Preferred Recruiter field highlighted with red color$/, 
    let color= await genieregistrationPage.recruiterProfileDropdown.getCSSProperty('border-color');
    console.log('border-color :'+color);
    await genieregistrationPage.recruiterProfileDropdown.saveScreenshot('./Screenshots/redcolField.png');
-   await browser.takeScreenshot(); 
+   cucumberJson.attach(await browser.takeScreenshot(), 'image/png'); 
 });
 
 When(/^user select options from Preferred Recruiter dropdown$/, async() => {
