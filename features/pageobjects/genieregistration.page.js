@@ -61,7 +61,7 @@ class GenieRegistration{
         return $("#field_availableToStart");
     }
     get calendarIcon(){
-        return $("(//button[@type='button'])[6]");
+        return $("//div[@class='input-group']/span//button[@class='btn btn-default']");
     }
     calendarButtons(button){
         return $(`//button[text()="${button}"]`);
@@ -94,16 +94,16 @@ class GenieRegistration{
         return $("(//button[@type='button'])[9]");
     }
     get StatesLicensedsearchEngine(){
-        return $("(//input[@type='text'])[6]");
+        return $("(//div[@class='dropdown-header']/input)[2]");
     }
     StatesLicensedulForm(text){
-        return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[2]/li//a[normalize-space()="${text}"]`);
+        return $(`//a[normalize-space()="${text}"]`);
     }
     DestinationStatesulForm(text){
         return $(`(//ul[@class='dropdown-menu dropdown-menu-form'])[3]/li//a[normalize-space()="${text}"]`);
     }
     get DestinationStatessearchEngine(){
-        return $("(//input[@type='text'])[7]");
+        return $("(//div[@class='dropdown-header']/input)[3]");
     }
     get recruiterProfileDropdown(){
         return $("//select[@id='field_recruiterProfile']");

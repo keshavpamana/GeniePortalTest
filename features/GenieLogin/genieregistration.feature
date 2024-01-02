@@ -86,7 +86,7 @@ Feature: Genie Caregiver Registration form
     Then verify calendar field have today date
     When user click on calendar icon and click "Clear" button
     When user click on close "Close" button
-    Then user select a future date as "28"
+    Then user select a future date as "31"
 
   @Profession @Specialty
   Scenario: Verify the Profession and Specialty dropdowns

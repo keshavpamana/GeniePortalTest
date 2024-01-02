@@ -1,5 +1,6 @@
 /node_modules
 /allure-results
 /allure-report
-/Files
+/.tmp
+
 

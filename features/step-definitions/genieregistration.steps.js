@@ -390,7 +390,8 @@ When(/^user enter valid data into the Lastname field$/, async(table) => {
   //----------calendar field--------//
  
 When(/^user click on calendar icon$/, async() => {
-    await elementClick(genieregistrationPage.calendarIcon);
+	await browser.scroll(0,350);
+    await genieregistrationPage.calendarIcon.click();
 });
 
 When('user click on {string} button', async(button) => {
@@ -411,16 +412,16 @@ When('user click on calendar icon and click {string} button', async(button) => {
 });
 
 When('user click on close {string} button', async(button) => {
-	await elementClick(genieregistrationPage.calendarIcon);
+	await genieregistrationPage.calendarIcon.click();
 	await waitTime();
-	await elementClick(genieregistrationPage.calendarButtons(button));
+	await genieregistrationPage.calendarButtons(button).click();
 	await waitTime();
 });
 
 Then('user select a future date as {string}', async(date) => {
-	await elementClick(genieregistrationPage.calendarIcon);
+	await genieregistrationPage.calendarIcon.click();
 	await waitTime();
-	await elementClick(genieregistrationPage.datePick(date));
+	await genieregistrationPage.datePick(date).click();
 	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');
 	await waitTime();
 });
@@ -518,7 +519,7 @@ Then(/^user select a given search option$/, async(text) => {
 //--------recruiter dropdowns-----//
 
 Given(/^user select a States Licensed button dropdown$/, async() => {
-    await elementClick(genieregistrationPage.StatesLicensedButton);
+    await genieregistrationPage.StatesLicensedButton.click();
 	await waitTime();
 });
 
@@ -535,7 +536,7 @@ Then(/^user remove last selected option$/, async(text) => {
 });
 
 When('user select search engine and enter as {string}', async(value) => {
-	await elementClick(genieregistrationPage.StatesLicensedsearchEngine);
+	await genieregistrationPage.StatesLicensedsearchEngine.click();
     await genieregistrationPage.StatesLicensedsearchEngine.setValue(value);
     await waitTime();
 });
