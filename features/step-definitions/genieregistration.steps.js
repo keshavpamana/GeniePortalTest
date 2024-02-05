@@ -5,7 +5,7 @@ const { LoginOrRegister } = require('../pageobjects/genieregister.page');
 const { elementClick, waitTime } = require('../Properties/TimeOut.page');
 const cucumberJson = require("wdio-cucumberjs-json-reporter");
 
-//----------Email Field-----------//
+//----------Email Field-----------------//
 Given(/^user is in Genie webpage$/, async() => {
     await browser.url(vars.GenieUrl);
 	await browser.maximizeWindow();
