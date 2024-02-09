@@ -9,12 +9,12 @@
     "allure-report": "allure generate --clean allure-results && allure open",
     "pdf": "node make-pdf.js",
     "pdf-chrome-linux": "node make-pdf.js /usr/bin/google-chrome"
-    
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/csv-parse": "^1.2.2",
     "@wdio/allure-reporter": "^8.24.2",
     "@wdio/cli": "^8.24.3",
     "@wdio/cucumber-framework": "^8.26.3",

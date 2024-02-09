@@ -46,7 +46,6 @@ Feature: Genie Caregiver Registration form
     When user enter wrong confirm password into the Confirm Password field
       | 123456 |
     Then verify displayed error message is "The password and its confirmation do not match!"
-    
     When user enter correct matched password into the Confirm Password field
       | keshav_123 |
 

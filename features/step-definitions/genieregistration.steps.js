@@ -408,10 +408,11 @@ When('user click on calendar icon and click {string} button', async(button) => {
 	await genieregistrationPage.calendarIcon.click();
 	await waitTime();
 	await genieregistrationPage.calendarButtons(button).click();
-	await waitTime();
+	
 });
 
 When('user click on close {string} button', async(button) => {
+	await browser.pause(3000);
 	await genieregistrationPage.calendarIcon.click();
 	await waitTime();
 	await genieregistrationPage.calendarButtons(button).click();
@@ -419,7 +420,7 @@ When('user click on close {string} button', async(button) => {
 });
 
 Then('user select a future date as {string}', async(date) => {
-	await genieregistrationPage.calendarIcon.click();
+	await elementClick(await genieregistrationPage.calendarIcon);
 	await waitTime();
 	await genieregistrationPage.datePick(date).click();
 	cucumberJson.attach(await browser.takeScreenshot(), 'image/png');

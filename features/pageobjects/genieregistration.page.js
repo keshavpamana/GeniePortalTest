@@ -61,10 +61,13 @@ class GenieRegistration{
         return $("#field_availableToStart");
     }
     get calendarIcon(){
-        return $("//div[@class='input-group']/span//button[@class='btn btn-default']");
+        return $("//button[@class='btn btn-default']");
     }
     calendarButtons(button){
         return $(`//button[text()="${button}"]`);
+    }
+    get coloseButton(){
+         return $("//span[@class='btn-group pull-right']");
     }
     datePick(date){
         return $(`//table[@class='uib-daypicker']/tbody//button[not(contains(@disabled,'disabled'))]//span[text()="${date}"]`);  
