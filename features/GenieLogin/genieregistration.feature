@@ -8,7 +8,7 @@ Feature: Genie Caregiver Registration form
     And user click on Register a new Account
     Then verify the  is in Genie Caregiver Registration form page
     Then verify email label is displayed
-    When user clicks on email input field and enter no data 
+    When user clicks on email input field and enter no data
     Then user able to see a email error message displayed as "This field is required"
     When user enter invalid email value
       | abcdxyzy@ |
@@ -85,7 +85,7 @@ Feature: Genie Caregiver Registration form
     Then verify calendar field have today date
     When user click on calendar icon and click "Clear" button
     When user click on close "Close" button
-    Then user select a future date as "31"
+    Then user select a future date as "15"
 
   @Profession @Specialty
   Scenario: Verify the Profession and Specialty dropdowns

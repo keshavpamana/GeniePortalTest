@@ -1,8 +1,10 @@
 {
-    "GenieUrl":"http://geniehealthjobsqa-env-4.eba-kmcgagjd.us-west-1.elasticbeanstalk.com/#/job",
+    "GenieUrl":"http://geniehealthjobsqa-env-3.eba-kmcgagjd.us-west-1.elasticbeanstalk.com/#/job",
     "leastpassword":"123",
-    "minlegthgmail":"abc@"
-    
+    "minlegthgmail":"abc@",
+    "GenieRegisterURL":"http://geniehealthjobsqa-env-3.eba-kmcgagjd.us-west-1.elasticbeanstalk.com/#/register",
+    "facebookMail":"8790864693",
+    "facebookPassword":"Keshav_123"
     
 
 }

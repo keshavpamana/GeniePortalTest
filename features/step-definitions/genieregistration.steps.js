@@ -24,6 +24,7 @@ When(/^user click on Register a new Account$/, async() => {
 Then(/^verify the  is in Genie Caregiver Registration form page$/, async() => {
     var urlname=await browser.getTitle();
 	console.log(urlname);
+	await browser.waitUntil(async () => (await browser.getUrl()) === vars.GenieRegisterURL);
 });
 
 Then(/^verify email label is displayed$/, async() => {

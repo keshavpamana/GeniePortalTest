@@ -12,12 +12,12 @@ Given(/^User is on Onboarding with username page$/, async() => {
 });
 
 Then(/^User verify the Username table data$/, async() => {
-const records = parse(fs.readFileSync(path.join('./Files/username.csv')), {
-  columns: true,
-  skip_empty_lines: true
-})
-    for (const record of records) {
-     console.log(record.Username);
-        
-    }
+    const records = parse(fs.readFileSync(path.join('./Files/username.csv')), {
+        columns: true,
+        skip_empty_lines: true
+      })
+          for (const record of records) {
+           console.log(record.Username);
+              
+          }   
 });
